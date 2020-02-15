@@ -50,7 +50,11 @@
             if (error) {
                 return callback(error);
             }
-            params.userData.customFields = fields;
+
+            // hide custom fields display if caller is not user data owner
+            // https://github.com/NodeBB/NodeBB/wiki/Hooks#controllersaccountsprofile
+            const shouldGetCustomField = params.userData.uid === params.uid;
+            params.userData.customFields = shouldGetCustomField ? fields : [];
             callback(null, params);
         });
     };
