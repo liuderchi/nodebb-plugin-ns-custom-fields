@@ -53,8 +53,12 @@
 
             // hide custom fields display if caller is not user data owner
             // https://github.com/NodeBB/NodeBB/wiki/Hooks#controllersaccountsprofile
-            const shouldGetCustomField = params.userData.uid === params.uid;
-            params.userData.customFields = shouldGetCustomField ? fields : [];
+            const shouldFilterPrivateFields = params.userData.uid !== params.uid;
+            // self defined list of private field names
+            const privateCustomFieldNames = ['Note'];
+            params.userData.customFields = shouldFilterPrivateFields
+                ? fields.filter(f => privateCustomFieldNames.indexOf(f.name) === -1)
+                : fields;
             callback(null, params);
         });
     };
