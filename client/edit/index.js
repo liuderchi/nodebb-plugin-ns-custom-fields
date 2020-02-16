@@ -16,10 +16,14 @@ define('forum/client/plugins/custom-fields-edit', [], function () {
 
     Edit.save = function () {
         var $form = $('.form-horizontal');
+        // B9 special field name note
+        var FIELD_NOTE = 'note'
         var data = $form.serializeArray().map(function (item) {
+            var fieldName = item.name.replace(idPrefix, '');
             return {
-                name : item.name.replace(idPrefix, ''),
-                value: utils.escapeHTML(item.value)
+                name: fieldName,
+                // B9 do not escape when updating note, expect item.value is json string
+                value: fieldName === FIELD_NOTE ? item.value : utils.escapeHTML(item.value)
             }
         });
 
