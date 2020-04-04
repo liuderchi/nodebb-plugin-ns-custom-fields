@@ -67,7 +67,7 @@
         custom_header.plugins.push({
             route: '/plugins/custom-fields',
             icon : faIcon,
-            name : 'Custom Fields'
+            name : 'Custom Fields (fork)'
         });
         callback(null, custom_header);
     };
